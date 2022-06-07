@@ -6,6 +6,7 @@ const templateFooter = document.getElementById('template-footer').content
 const templateCarrito = document.getElementById('template-carrito').content
 const fragment = document.createDocumentFragment()
 let carrito = {}
+
 document.addEventListener('DOMContentLoaded', () => {
     fetchData()
     if(localStorage.getItem('carrito')) {
@@ -115,10 +116,41 @@ const pintarFooter =() => {
 
     const btnVaciar = document.getElementById('vaciar-carrito')
     btnVaciar.addEventListener('click', () => {
-        carrito = {}
-        pintarCarrito()
+        Swal.fire({
+            title: '¿Estas Seguro(a)?',
+            text: "Vas a vaciar tu carrito",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, borrar todo'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire(
+                'Se borraron tus productos',
+                
+              )
+              carrito = {}
+              pintarCarrito()
+            }
+          })
     })
+    
+ 
+   const btnComprarTodo = document.getElementById('comprarTodo');
+   btnComprarTodo.addEventListener('click', () => {
+    Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Compra Exitosa',
+        showConfirmButton: false,
+        timer: 1500
+      })
+   })
+
 }
+
+
 
 const btnAcción = e => {
     console.log(e.target)
